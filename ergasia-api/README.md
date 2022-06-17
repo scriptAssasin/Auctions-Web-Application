@@ -1,8 +1,8 @@
-INTELLIFLOW CORE API
+ΔΗΜΟΠΡΑΣΙΕΣ CORE API
 
 Structure
 .
-├── intelliflow-api      # "app" is a Python package
+├── ΔΗΜΟΠΡΑΣΙΕΣ-api      # "app" is a Python package
 │   ├── __init__.py      # this file makes "app" a "Python package"
 │   ├── main.py          # "main" module, e.g. import app.main
 │   └── src          # "routers" is a "Python subpackage"

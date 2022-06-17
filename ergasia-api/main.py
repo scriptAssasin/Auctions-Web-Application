@@ -7,10 +7,10 @@ from src.routers import users as user_main
 from src.dependencies import *
 
 def get_application(api_router):
-    app = FastAPI(title = "Intelliflow-core REST API")
+    app = FastAPI(title = "ΔΗΜΟΠΡΑΣΙΕΣ REST API")
     app.add_middleware(
         CORSMiddleware,
-        # allow_origins=["https://intelliflow-temp-front.evolution-isa.gr/, http://207.154.231.205:3000/, http://207.154.231.205:3001/, http://172.26.224.1:3001", "http://localhost:3001", "http://192.168.1.11:3001", "http://172.26.224.1:3000", "http://localhost:3000", "http://192.168.1.11:3000"],
+        # allow_origins=["https://ΔΗΜΟΠΡΑΣΙΕΣ-temp-front.evolution-isa.gr/, http://207.154.231.205:3000/, http://207.154.231.205:3001/, http://172.26.224.1:3001", "http://localhost:3001", "http://192.168.1.11:3001", "http://172.26.224.1:3000", "http://localhost:3000", "http://192.168.1.11:3000"],
         allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
