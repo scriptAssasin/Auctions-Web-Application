@@ -4,6 +4,7 @@ from pydantic import BaseModel, UUID4
 from typing import List, Optional, Any, Dict
 
 class AuthIn(BaseModel):
-    email: str
+    Username: str
     password: str
-    platform: str
+
+Users = Base.classes.Users

@@ -22,12 +22,12 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    email: Optional[str] = None
+    Username: Optional[str] = None
 
 
 class User(BaseModel):
     username: str
-    email: Optional[str] = None
+    Username: Optional[str] = None
     full_name: Optional[str] = None
     # disabled: Optional[bool] = None
 
@@ -64,12 +64,12 @@ def get_password_hash(password):
 #         return UserInDB(**user_dict)
 
 
-def authenticate_user(db, email: str, password: str, platform: str):
-    user = db.query(DbUsers).filter(DbUsers.Email == email).first()
+def authenticate_user(db, Username: str, password: str):
+    user = db.query(Users).filter(Users.Username == Username).first()
     if not user:
         return False
     else:
-        if not verify_password(password, user.PasswordHash):
+        if not verify_password(password, user.Password):
             return False
         return user
 
@@ -94,13 +94,13 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        email: str = payload.get("sub")
-        if email is None:
+        Username: str = payload.get("sub")
+        if Username is None:
             raise credentials_exception
-        token_data = TokenData(email=email)
+        token_data = TokenData(Username=Username)
     except JWTError:
         raise credentials_exception
-    user = db.query(DbUsers).filter(DbUsers.Email == token_data.email).first()
+    user = db.query(Users).filter(Users.Username == token_data.Username).first()
     
     if user is None: 
         raise credentials_exception

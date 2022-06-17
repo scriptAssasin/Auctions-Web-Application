@@ -10,7 +10,7 @@ router = APIRouter()
 
 @router.post("/token/", response_model=Token)
 async def login_for_access_token(form_data: AuthIn, db: Session = Depends(get_db)):
-    user = authenticate_user(db, form_data.email, form_data.password, form_data.platform)
+    user = authenticate_user(db, form_data.Username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -19,7 +19,7 @@ async def login_for_access_token(form_data: AuthIn, db: Session = Depends(get_db
         )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user.Email}, expires_delta=access_token_expires
+        data={"sub": user.Username}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
@@ -38,4 +38,4 @@ async def user_get(token: str = Depends(oauth2_scheme), db: Session = Depends(ge
 
 @router.get("/test/")
 async def read_own_items(current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
-    return db.query(DbUsers).all()
+    return db.query(Users).all()

@@ -7,10 +7,16 @@ import { Container, Row, Col } from "reactstrap";
 // core components
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
-
+import Login from "views/examples/Login.js";
 import routes from "routes.js";
 
+
+function setToken(userToken) {
+  localStorage.setItem('token', userToken);
+}
+
 const Auth = (props) => {
+
   const mainContent = React.useRef(null);
   const location = useLocation();
 
@@ -77,10 +83,11 @@ const Auth = (props) => {
         {/* Page content */}
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
-            <Switch>
+            <Login setToken={setToken}></Login>
+            {/* <Switch>
               {getRoutes(routes)}
               <Redirect from="*" to="/auth/login" />
-            </Switch>
+            </Switch> */}
           </Row>
         </Container>
       </div>
