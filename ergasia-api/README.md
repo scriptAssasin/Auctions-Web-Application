@@ -12,4 +12,4 @@ Structure
 │   │   |   ├── items.py     # "items" submodule, e.g. import app.routers.items
 
 
-uvicorn --port 5001 --host 0.0.0.0 main:app --reload
+uvicorn --port 5000 --host 0.0.0.0 main:app --reload

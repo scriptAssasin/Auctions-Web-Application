@@ -28,7 +28,6 @@ async function loginUser(credentials) {
     .then(data => data.json())
 }
 
-
 async function verifyToken(token) {
   await fetch(process.env.REACT_APP_API_LINK + "/api/users/current/", {
     method: 'get',
@@ -37,21 +36,22 @@ async function verifyToken(token) {
       'Content-Type': 'application/x-www-form-urlencoded'
     })
   })
-    //.then(res => res.json())
     .then(
       (result) => {
         console.log(result.status);
-        if (!result) {
+        if (result.status == 401) {
           localStorage.removeItem('token');
           window.location.replace("/auth/login");
         }
         else {
           localStorage.setItem('token', token);
+
         }
       },
-      
+
     )
 };
+
 
 export default function Login({ setToken }) {
   const [Username, setUsername] = useState();
@@ -63,7 +63,6 @@ export default function Login({ setToken }) {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    console.log(1);
     if (token) {
       verifyToken(token);
       window.location.replace("/admin/index");
