@@ -6,6 +6,7 @@ import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
+import UserManagement from "views/examples/UserManagement.js";
 
 var routes = [
   {
@@ -15,13 +16,13 @@ var routes = [
     component: Index,
     layout: "/admin",
   },
-  // {
-  //   path: "/icons",
-  //   name: "Icons",
-  //   icon: "ni ni-planet text-blue",
-  //   component: Icons,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/users",
+    name: "Users Management",
+    icon: "ni ni-planet text-blue",
+    component: UserManagement,
+    layout: "/admin",
+  },
   // {
   //   path: "/maps",
   //   name: "Maps",

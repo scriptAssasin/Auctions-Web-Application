@@ -162,7 +162,7 @@ const Sidebar = (props) => {
                 <span>Support</span>
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              <DropdownItem href="#pablo" onClick={(e) => { localStorage.removeItem('token'); window.location.reload(); }}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </DropdownItem>
@@ -216,12 +216,24 @@ const Sidebar = (props) => {
             </InputGroup>
           </Form>
           {/* Navigation */}
-          <Nav navbar>{createLinks(routes)}</Nav>
+          <Nav navbar>
+            <NavItem key={1}>
+              <NavLink
+                to={"/admin/index"}
+                tag={NavLinkRRD}
+                onClick={closeCollapse}
+                activeClassName="active"
+              >
+                <i className={'fa fa-home text-primary mr-3'} />
+                Αρχική
+              </NavLink>
+            </NavItem>
+          </Nav>
           {/* Divider */}
           <hr className="my-3" />
           {/* Heading */}
           {/* Navigation */}
-          
+
         </Collapse>
       </Container>
     </Navbar>

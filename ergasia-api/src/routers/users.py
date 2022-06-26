@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from fastapi import Query, APIRouter
 from src.dependencies import *
-
+import uuid
 
 #APIRouter creates path operations for user module
 router = APIRouter() 
@@ -36,6 +36,35 @@ async def user_get(token: str = Depends(oauth2_scheme), db: Session = Depends(ge
     
     return user
 
-@router.get("/test/")
-async def read_own_items(current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
-    return db.query(Users).all()
+@router.get("/roles/")
+async def get_user_roles(current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    return db.query(Roles).all()
+
+@router.post("/register/")
+async def register_user(UserData: UserRegister, db: Session = Depends(get_db)):
+    print(UserData)
+
+    existing = db.query(Users).filter(Users.Username == UserData.Username).first()
+
+    if not existing:
+        new_uuid = str(uuid.uuid4())
+
+        new_user = Users(
+            Id=new_uuid, 
+            Username=UserData.Username,
+            Password=get_password_hash(UserData.Password),
+            Pending=True,
+            Name=UserData.Name,
+            Surname=UserData.Surname,
+            Phone=UserData.Phone,
+            Address=UserData.Address,
+            Afm=UserData.Afm,
+            Email=UserData.Email,
+            UserRole='aafc2a5f-675a-42e7-8a8d-ef762cf3f53e'
+        )
+        db.add(new_user)
+        db.commit()
+
+        return {}
+    else:
+        return -1

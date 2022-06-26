@@ -158,7 +158,7 @@ export default function Login({ setToken }) {
                 <Button className="my-4" color="primary" type="submit">
                   Σύνδεση
                 </Button>
-                <Button className="my-4" color="warning" type="button">
+                <Button href="/auth/register" className="my-4" color="warning" type="button">
                   Εγγραφή
                 </Button>
               </div>

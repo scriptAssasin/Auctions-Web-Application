@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useLocation, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
@@ -9,6 +9,7 @@ import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 import Login from "views/examples/Login.js";
 import routes from "routes.js";
+import Register from "views/examples/Register.js"
 
 
 function setToken(userToken) {
@@ -83,11 +84,24 @@ const Auth = (props) => {
         {/* Page content */}
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
-            <Login setToken={setToken}></Login>
-            {/* <Switch>
-              {getRoutes(routes)}
-              <Redirect from="*" to="/auth/login" />
-            </Switch> */}
+            {props.location.pathname.includes("login") ?
+              <>
+                <Login setToken={setToken}></Login>
+              </>
+              :
+              <>
+                {props.location.pathname.includes("register") ?
+                  <>
+                    <Register></Register>
+                  </>
+                  :
+                  <>
+                    <Login setToken={setToken}></Login>
+                  </>
+                }
+              </>
+            }
+
           </Row>
         </Container>
       </div>

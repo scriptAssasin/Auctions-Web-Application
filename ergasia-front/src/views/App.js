@@ -6,6 +6,7 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
+import Register from "views/examples/Register.js"
 
 async function verifyToken(token) {
     await fetch(process.env.REACT_APP_API_LINK + "/api/users/current/", {
@@ -39,11 +40,12 @@ function App() {
     const token = localStorage.getItem('token');
 
     if (!token) {
-        if (window.location.href.includes('signup')) {
+        if (window.location.href.includes('register')) {
             return (
                 <BrowserRouter>
                     <Switch>
-                        {/* <Route path="/signup" render={props => <SignUpLayout {...props} />} /> */}
+                    <Route path="/auth/register" render={(props) => <AuthLayout {...props} />} />
+
                     </Switch>
                 </BrowserRouter>
             )
