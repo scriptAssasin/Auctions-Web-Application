@@ -39,6 +39,7 @@ class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userRole: [],
       pending: false,
       roles: {},
       loading: false
@@ -80,7 +81,8 @@ class Index extends React.Component {
         }
         this.setState({
           pending: data.Pending,
-          loading: true
+          loading: true,
+          userRole: data.UserRole
         });
       })
 
@@ -89,9 +91,10 @@ class Index extends React.Component {
   }
 
   render() {
+    
     return (
       <>
-        {this.state.loading ?
+        {this.state.loading && this.state.userRole != 'Administrator'  ?
           <>
             <Header />
             {/* Page content */}

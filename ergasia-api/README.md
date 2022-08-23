@@ -17,3 +17,5 @@ uvicorn --port 5000 --host 0.0.0.0 main:app --reload
 https://geshan.com.np/blog/2021/12/docker-postgres/ - docker
 
 docker exec -e PGPASSWORD=1234 tedi_ergasia-db-1 pg_dump -U postgres postgres > file.bkup.sql
+
+docker exec -e PGPASSWORD=1234 postgres pg_dump -U postgres depa-studies-migration > bkup_depa.sql

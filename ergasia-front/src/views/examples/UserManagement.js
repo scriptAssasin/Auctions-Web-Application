@@ -40,7 +40,8 @@ class UserManagement extends React.Component {
     super(props);
     this.state = {
       pending: false,
-      roles: {}
+      roles: {},
+      users: []
     };
   };
 
@@ -56,7 +57,7 @@ class UserManagement extends React.Component {
       .then(response => response.json())
       .then(data => {
         data.forEach(element => {
-          console.log(element);
+          // console.log(element);
           this.state.roles[element.Id] = element.Role
         });
       })
@@ -70,10 +71,25 @@ class UserManagement extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (this.state.roles[data.UserRole] != 'Administrator') {
           window.location.replace("/admin/index");
         }
+      })
+
+    await fetch(process.env.REACT_APP_API_LINK + "/api/users/all/", {
+      method: 'get',
+      headers: new Headers({
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/x-www-form-urlencoded'
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          users: data
+        })
       })
 
 
@@ -105,17 +121,33 @@ class UserManagement extends React.Component {
             <Container fluid>
               <Card>
 
-                <Table striped bordered hover>
+                <Table striped bordered hover responsive>
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Username</th>
+                      <th>Ονομα</th>
+                      <th>Επωνυμο</th>
+                      <th>Ονομα Χρηστη</th>
+                      <th>Ρολος</th>
+                      <th>Εκκρεμει</th>
+                      <th>Ενεργειες</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    {this.state.users.map((user, index) => (
+
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{user.Name}</td>
+                        <td>{user.Surname}</td>
+                        <td>{user.Username}</td>
+                        <td>{this.state.roles[user.UserRole]}</td>
+                        <td>{user.Pending ? 'ΝΑΙ' : 'ΟΧΙ'}</td>
+                        <td><a href={"/admin/user/" + user.Id}><Button color='primary' size='sm'>Περισσότερα</Button></a></td>
+                      </tr>
+
+                    ))}
+                    {/* <tr>
                       <td>1</td>
                       <td>Mark</td>
                       <td>Otto</td>
@@ -131,7 +163,7 @@ class UserManagement extends React.Component {
                       <td>3</td>
                       <td colSpan={2}>Larry the Bird</td>
                       <td>@twitter</td>
-                    </tr>
+                    </tr> */}
                   </tbody>
                 </Table>
               </Card>

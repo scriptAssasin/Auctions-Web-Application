@@ -11,11 +11,11 @@ services:
     volumes: 
       - db:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-  frontend:
+  frontend_tedi:
     build:
       context: ./ergasia-front/
       dockerfile: Dockerfile
-    container_name: Frontend
+    container_name: frontend_tedi
     ports: 
     - 3000:3000
     volumes: 

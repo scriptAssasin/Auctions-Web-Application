@@ -8,6 +8,10 @@ import uuid
 #APIRouter creates path operations for user module
 router = APIRouter() 
 
+@router.get("/all/")
+async def get_all_users(current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    return db.query(Users).all()
+
 @router.post("/token/", response_model=Token)
 async def login_for_access_token(form_data: AuthIn, db: Session = Depends(get_db)):
     user = authenticate_user(db, form_data.Username, form_data.password)

@@ -7,6 +7,7 @@ import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 import UserManagement from "views/examples/UserManagement.js";
+import UserDetails from "views/examples/UserDetails.js";
 
 var routes = [
   {
@@ -21,6 +22,13 @@ var routes = [
     name: "Users Management",
     icon: "ni ni-planet text-blue",
     component: UserManagement,
+    layout: "/admin",
+  },
+  {
+    path: "/user/:id",
+    name: "User Details",
+    icon: "ni ni-planet text-blue",
+    component: UserDetails,
     layout: "/admin",
   },
   // {
