@@ -86,3 +86,16 @@ async def register_user(UserData: UserRegister, db: Session = Depends(get_db)):
         return {}
     else:
         return -1
+
+@router.post("/approve/{user_id}/")
+async def approve_user(user_id: str, db: Session = Depends(get_db)):
+
+    try:
+        user = db.query(Users).filter(Users.Id == user_id).first()
+        user.Pending = False
+
+        db.commit()
+
+        return 1
+    except:
+        return -1

@@ -41,6 +41,7 @@ class UserDetails extends React.Component {
             userInfo: []
         };
     };
+
     async componentDidMount() {
         await fetch(process.env.REACT_APP_API_LINK + "/api/users/current_details/" + this.props.match.params.id + "/", {
             method: 'get',
@@ -57,7 +58,23 @@ class UserDetails extends React.Component {
                 })
             })
 
-            
+
+
+    }
+
+    approveUser = () => {
+        const userId = this.props.match.params.id;
+
+        fetch(process.env.REACT_APP_API_LINK + '/api/users/approve/' + userId + "/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                window.location.reload();
+            })
     }
 
     render() {
@@ -82,7 +99,7 @@ class UserDetails extends React.Component {
                             </Card>
                         </Col>
                         <Container fluid>
-                            <Card style={{padding: '20px'}}>
+                            <Card style={{ padding: '20px' }}>
                                 <Row>
 
                                     {Object.keys(this.state.userInfo).map((key, index) => {
@@ -99,8 +116,14 @@ class UserDetails extends React.Component {
                                             // </div>
                                         );
                                     })}
-                                </Row>
+                                    {this.state.userInfo['Εκκρεμεί'] ?
+                                        <>
+                                            <Button style={{ margin: '20px' }} color='primary' onClick={ () => { this.approveUser() } }>Έγκριση Χρήστη</Button>
+                                        </>
+                                        :
+                                        <></>}
 
+                                </Row>
 
                             </Card>
                         </Container>
