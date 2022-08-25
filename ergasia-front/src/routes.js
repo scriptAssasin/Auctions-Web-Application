@@ -8,6 +8,7 @@ import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 import UserManagement from "views/examples/UserManagement.js";
 import UserDetails from "views/examples/UserDetails.js";
+import AuctionsManagement from "views/examples/AuctionsManagement.js";
 
 var routes = [
   {
@@ -31,13 +32,13 @@ var routes = [
     component: UserDetails,
     layout: "/admin",
   },
-  // {
-  //   path: "/maps",
-  //   name: "Maps",
-  //   icon: "ni ni-pin-3 text-orange",
-  //   component: Maps,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/auctionsmanagement",
+    name: "Auctions Management",
+    icon: "ni ni-pin-3 text-orange",
+    component: AuctionsManagement,
+    layout: "/admin",
+  },
   // {
   //   path: "/user-profile",
   //   name: "User Profile",

@@ -188,8 +188,8 @@ class Index extends React.Component {
                           </CardText>
                           <Button
                             color="primary"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
+                            href="/admin/auctionsmanagement"
+                            
                           >
                             Μετάβαση
                           </Button>
