@@ -20,6 +20,7 @@ import {
     Container,
     Row,
     Col,
+    Input
 } from "reactstrap";
 
 // core components
@@ -37,11 +38,11 @@ class UserDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userInfo: {}
+            userInfo: []
         };
     };
     async componentDidMount() {
-        await fetch(process.env.REACT_APP_API_LINK + "/api/users/current/", {
+        await fetch(process.env.REACT_APP_API_LINK + "/api/users/current_details/" + this.props.match.params.id + "/", {
             method: 'get',
             headers: new Headers({
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -55,61 +56,61 @@ class UserDetails extends React.Component {
                     userInfo: data
                 })
             })
+
+            
     }
 
     render() {
         return (
             <>
                 <Header />
-                <Table striped bordered hover responsive>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Ονομα</th>
-                            <th>Επωνυμο</th>
-                            <th>Ονομα Χρηστη</th>
-                            <th>Ρολος</th>
-                            <th>Εκκρεμει</th>
-                            <th>Ενεργειες</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {Object.values(this.state.userInfo).map((user, index) => (
-                            <input type='text' value="" />
-                            
-                        ))}
-                        {this.state.users.map((user, index) => (
+                <Container className="mt--8" fluid>
+                    <Row className="mt-5 align-items-center">
 
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{user.Name}</td>
-                                <td>{user.Surname}</td>
-                                <td>{user.Username}</td>
-                                <td>{this.state.roles[user.UserRole]}</td>
-                                <td>{user.Pending ? 'ΝΑΙ' : 'ΟΧΙ'}</td>
-                                <td><a href={"/admin/user/" + user.Id}><Button color='primary' size='sm'>Περισσότερα</Button></a></td>
-                            </tr>
 
-                        ))}
-                        {/* <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td colSpan={2}>Larry the Bird</td>
-                      <td>@twitter</td>
-                    </tr> */}
-                    </tbody>
-                </Table>
+
+
+                        <Col className="mb-5 mb-xl-0" xl="12">
+                            <Card className="shadow" style={{ marginTop: '-50px', marginBottom: '30px' }}>
+                                <CardHeader className="border-0">
+                                    <Row className="align-items-center">
+                                        <div className="col">
+                                            <h3 className="mb-0">Σελίδα Διαχείρισης Χρηστών</h3>
+                                        </div>
+                                    </Row>
+                                </CardHeader>
+                            </Card>
+                        </Col>
+                        <Container fluid>
+                            <Card style={{padding: '20px'}}>
+                                <Row>
+
+                                    {Object.keys(this.state.userInfo).map((key, index) => {
+                                        return (
+                                            <Col sm="4">
+
+                                                <span>{key}</span>
+                                                <Input type="text" value={this.state.userInfo[key]} disabled /> <br />
+                                            </Col>
+                                            // <div key={index}>
+                                            //     <h2>{value}</h2>
+
+                                            //     <hr />
+                                            // </div>
+                                        );
+                                    })}
+                                </Row>
+
+
+                            </Card>
+                        </Container>
+
+
+
+
+
+                    </Row>
+                </Container>
 
             </>
         )

@@ -40,6 +40,20 @@ async def user_get(token: str = Depends(oauth2_scheme), db: Session = Depends(ge
     
     return user
 
+@router.get("/current_details/{user_id}/", status_code = status.HTTP_200_OK)
+async def user_get(user_id:str, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    user = await get_current_user(token, db)
+
+    temp = (
+        db.query(Users)
+        .join(Roles, Roles.Id == Users.UserRole)
+        .filter(Users.Id == user_id)
+        .values(Users.Name.label('Όνομα'), Users.Surname.label('Επώνυμο'), Users.Username.label('Όνομα Χρήστη'), Users.Address.label('Διεύθυνση'), Users.Email.label('Email'), Users.Pending.label('Εκκρεμεί'), Users.Phone.label('Τηλέφωνο'), Users.Afm.label('ΑΦΜ'), Roles.Role.label('Ρόλος') )
+    )
+    temp = [x._asdict() for x in temp]
+
+    return temp[0]
+
 @router.get("/roles/")
 async def get_user_roles(current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
     return db.query(Roles).all()
