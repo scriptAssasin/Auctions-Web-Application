@@ -68,6 +68,7 @@ class UserDetails extends React.Component {
         fetch(process.env.REACT_APP_API_LINK + '/api/users/approve/' + userId + "/", {
             method: 'POST',
             headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Content-Type': 'application/json'
             }
         })

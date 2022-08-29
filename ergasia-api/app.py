@@ -4,6 +4,7 @@ from typing import Optional
 from fastapi import Depends, FastAPI, status, APIRouter, HTTPException
 from starlette.middleware.cors import CORSMiddleware
 from src.routers import users as user_main
+from src.routers import auctions as auctions_main
 from src.dependencies import *
 
 def get_application(api_router):
@@ -23,6 +24,7 @@ def get_application(api_router):
 
 api_router = APIRouter()
 api_router.include_router(user_main.router,  prefix="/users", tags=["users"], responses={404: {"description": "Not found"}})
+api_router.include_router(auctions_main.router,  prefix="/auctions", tags=["auctions"], responses={404: {"description": "Not found"}})
 
 app = get_application(api_router)
 

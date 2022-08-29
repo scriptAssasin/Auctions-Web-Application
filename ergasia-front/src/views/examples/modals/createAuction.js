@@ -17,17 +17,54 @@ import {
 } from "reactstrap";
 
 class CreateAuctionModal extends React.Component {
-    state = {
-        defaultModal: false,
-        itemName: '',
-        itemCategories: '',
-        
+    constructor(props) {
+        super(props);
+        this.state = {
+            defaultModal: false,
+            itemName: '',
+            itemCategories: [],
+            buyPrice: '',
+            firstBid: '',
+            itemDescription: '',
+            auctionEndDate: ''
+        };
     };
+
+
     toggleModal = state => {
         this.setState({
             [state]: !this.state[state]
         });
     };
+
+    handleChange = evt => {
+        let value = evt.target.value;
+
+        if (evt.target.name == 'itemCategories') {
+            value = evt.target.value.split(",")
+        }
+        this.setState({
+            [evt.target.name]: value
+        });
+
+    }
+
+    createAuction = (evt) => {
+        evt.preventDefault();
+        fetch(process.env.REACT_APP_API_LINK + '/api/auctions/create/', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state)
+        })
+            .then(res => res.json())
+            .then(data => {
+                window.location.reload();
+            })
+    }
+
     render() {
         return (
             <>
@@ -61,31 +98,35 @@ class CreateAuctionModal extends React.Component {
                                             <Row>
                                                 <Col sm='6'>
                                                     <label>Όνομα προιόντος</label>
-                                                    <Input type='text' placeholder='Εισάγετε Όνομα Προιόντος' /> <br />
+                                                    <Input name='itemName' type='text' placeholder='Εισάγετε Όνομα Προιόντος' onChange={(e) => { this.handleChange(e) }} /> <br />
                                                 </Col>
                                                 <Col sm='6'>
                                                     <label>Κατηγορία προιόντος (Πολλαπλές κατηγορίες διαχωρίζονται με , )</label>
-                                                    <Input type='text' placeholder='Εισάγετε Κατηγορίες Προιόντος' /> <br />
+                                                    <Input name='itemCategories' type='text' placeholder='Εισάγετε Κατηγορίες Προιόντος' onChange={(e) => { this.handleChange(e) }} /> <br />
 
                                                 </Col>
                                                 <Col sm='6'>
                                                     <label>Τιμή άμεσης αγοράς</label>
-                                                    <Input type='text' placeholder='Εισάγετε Τιμή Άμεσης Αγοράς' /> <br />
+                                                    <Input name='buyPrice' type='text' placeholder='Εισάγετε Τιμή Άμεσης Αγοράς' onChange={(e) => { this.handleChange(e) }} /> <br />
 
                                                 </Col>
                                                 <Col sm='6'>
                                                     <label>Ελάχιστο μέγεθος πρώτης προσφοράς</label>
-                                                    <Input type='text' placeholder='Εισάγετε Ελάχιστο μέγεθος πρώτης προσφοράς' /> <br />
+                                                    <Input name='firstBid' type='text' placeholder='Εισάγετε Ελάχιστο μέγεθος πρώτης προσφοράς' onChange={(e) => { this.handleChange(e) }} /> <br />
 
                                                 </Col>
                                                 <Col sm='6'>
                                                     <label>Περιγραφή Προιόντος</label>
-                                                    <Input type='text' placeholder='Εισάγετε Περιγραφή Προιόντος' /> <br />
+                                                    <Input name='itemDescription' type='text' placeholder='Εισάγετε Περιγραφή Προιόντος' onChange={(e) => { this.handleChange(e) }} /> <br />
+
+                                                </Col>
+                                                <Col sm='6'>
+                                                    <label>Ημερομηνία Λήξης Δημοπρασίας</label>
+                                                    <Input name='auctionEndDate' type='text' placeholder='Εισάγετε Ημερομηνία Λήξης Δημοπρασίας' onChange={(e) => { this.handleChange(e) }} /> <br />
 
                                                 </Col>
                                                 <Col sm='12'>
-
-                                                    <Button color='success'>Υποβολή</Button>
+                                                    <Button color='success' onClick={(e) => { this.createAuction(e) }}>Υποβολή</Button>
                                                 </Col>
                                             </Row>
 
