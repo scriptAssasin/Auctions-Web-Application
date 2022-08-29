@@ -34,6 +34,8 @@ import {
 
 import Header from "components/Headers/Header.js";
 
+import CreateAuctionModal from "../examples/modals/createAuction.js";
+
 class AuctionsManagement extends React.Component {
 
   constructor(props) {
@@ -44,7 +46,7 @@ class AuctionsManagement extends React.Component {
 
   async componentDidMount() {
 
-    
+
 
 
   }
@@ -72,9 +74,163 @@ class AuctionsManagement extends React.Component {
               </Card>
             </Col>
             <Container fluid>
-              <Card>
+              <Card style={{ padding: '20px' }}>
+                <Row>
+                  <Col>
+                    <CreateAuctionModal />
+                  </Col>
+                </Row> <br />
+                <h2 style={{ textAlign: 'center' }}>Ενεργές Δημοπρασίες</h2> <br />
+                <Row>
+                  <Col>
+                    <Card style={{ width: "18rem" }}>
+                                {/* <CardImg
+                      alt="..."
+                      src={require("assets/img/theme/img-1-1000x900.jpg").default}
+                      top
+                    /> */}
+                      <CardBody>
+                        <CardTitle>Δημοπρασία 1</CardTitle>
+                        <CardText>
+                          Δοκιμαστικό Κείμενο
+                        </CardText>
+                        <Row>
 
-                
+                          <Col sm='5'>
+
+                            <Button
+                              color="warning"
+                              size='sm'
+
+                            >
+                              Επεξεργασία
+                            </Button>
+                          </Col>
+                          <Col sm='5'>
+                            <Button
+                              color="info"
+                              size='sm'
+
+                            >
+                              Προσφορές
+                            </Button>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col>
+                    <Card style={{ width: "18rem" }}>
+                                {/* <CardImg
+                      alt="..."
+                      src={require("assets/img/theme/img-1-1000x900.jpg").default}
+                      top
+                    /> */}
+                      <CardBody>
+                        <CardTitle>Δημοπρασία 2</CardTitle>
+                        <CardText>
+                          Δοκιμαστικό Κείμενο
+                        </CardText>
+                        <Row>
+
+                          <Col sm='5'>
+
+                            <Button
+                              color="warning"
+                              size='sm'
+
+                            >
+                              Επεξεργασία
+                            </Button>
+                          </Col>
+                          <Col sm='5'>
+                            <Button
+                              color="info"
+                              size='sm'
+
+                            >
+                              Προσφορές
+                            </Button>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col>
+                    <Card style={{ width: "18rem" }}>
+                                {/* <CardImg
+                      alt="..."
+                      src={require("assets/img/theme/img-1-1000x900.jpg").default}
+                      top
+                    /> */}
+                      <CardBody>
+                        <CardTitle>Δημοπρασία 3</CardTitle>
+                        <CardText>
+                          Δοκιμαστικό Κείμενο
+                        </CardText>
+                        <Row>
+
+                          <Col sm='5'>
+
+                            <Button
+                              color="warning"
+                              size='sm'
+
+                            >
+                              Επεξεργασία
+                            </Button>
+                          </Col>
+                          <Col sm='5'>
+                            <Button
+                              color="info"
+                              size='sm'
+
+                            >
+                              Προσφορές
+                            </Button>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col>
+                    <Card style={{ width: "18rem" }}>
+                                {/* <CardImg
+                      alt="..."
+                      src={require("assets/img/theme/img-1-1000x900.jpg").default}
+                      top
+                    /> */}
+                      <CardBody>
+                        <CardTitle>Δημοπρασία 4</CardTitle>
+                        <CardText>
+                          Δοκιμαστικό Κείμενο
+                        </CardText>
+                        <Row>
+
+                          <Col sm='5'>
+
+                            <Button
+                              color="warning"
+                              size='sm'
+
+                            >
+                              Επεξεργασία
+                            </Button>
+                          </Col>
+                          <Col sm='5'>
+                            <Button
+                              color="info"
+                              size='sm'
+
+                            >
+                              Προσφορές
+                            </Button>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
               </Card>
             </Container>
 
