@@ -25,6 +25,10 @@ class AuctionsCRUD(BaseModel):
     itemDescription: str
     auctionEndDate: str
 
+class BidsCRUD(BaseModel):
+    Amount:str
+
 Users = Base.classes.Users
 Roles = Base.classes.UserRoles
 Auctions = Base.classes.Auctions
+Bids = Base.classes.Bids

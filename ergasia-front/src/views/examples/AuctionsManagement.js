@@ -35,6 +35,7 @@ import {
 import Header from "components/Headers/Header.js";
 
 import CreateAuctionModal from "../examples/modals/createAuction.js";
+import EditAuctionModal from "../examples/modals/editAuction.js";
 
 class AuctionsManagement extends React.Component {
 
@@ -63,6 +64,36 @@ class AuctionsManagement extends React.Component {
         })
       })
 
+  }
+
+  startAuction = (auctionId) => {
+
+    fetch(process.env.REACT_APP_API_LINK + '/api/auctions/start/' + auctionId + '/', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        window.location.reload();
+      })
+  }
+
+  deleteAuction = (auctionId) => {
+
+    fetch(process.env.REACT_APP_API_LINK + '/api/auctions/delete/' + auctionId + '/', {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        window.location.reload();
+      })
   }
 
   render() {
@@ -94,7 +125,7 @@ class AuctionsManagement extends React.Component {
                     <CreateAuctionModal />
                   </Col>
                 </Row> <br />
-                <h2 style={{ textAlign: 'center' }}>Ενεργές Δημοπρασίες</h2> <br />
+                <h2 style={{ textAlign: 'center' }}>Οι Δημοπρασίες Μου</h2> <br />
                 <Row>
 
 
@@ -114,16 +145,7 @@ class AuctionsManagement extends React.Component {
                           </CardText>
                           <Row>
 
-                            <Col sm='5'>
 
-                              <Button
-                                color="warning"
-                                size='sm'
-
-                              >
-                                Επεξεργασία
-                              </Button>
-                            </Col>
                             <Col sm='5'>
                               <Button
                                 color="info"
@@ -133,6 +155,31 @@ class AuctionsManagement extends React.Component {
                                 Προσφορές
                               </Button>
                             </Col>
+                            {!auction.hasStarted ? <>
+                              <Col sm='5'>
+
+                                <EditAuctionModal auctionId={auction.Id} />
+                              </Col>
+                              <Col sm='5'  className='mt-3'>
+
+                                <Button
+                                  color="danger"
+                                  size='sm'
+                                  onClick={() => { this.deleteAuction(auction.Id) }}
+                                >
+                                  Διαγραφή
+                                </Button>
+                              </Col>
+                              <Col sm='5' className='mt-3'>
+                                <Button
+                                  color="success"
+                                  size='sm'
+                                  onClick={() => { this.startAuction(auction.Id) }}
+                                >
+                                  Εκκίνηση
+                                </Button>
+                              </Col>
+                            </> : <></>}
                           </Row>
                         </CardBody>
                       </Card>
