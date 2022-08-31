@@ -26,7 +26,7 @@ def get_application(api_router):
 api_router = APIRouter()
 api_router.include_router(user_main.router,  prefix="/users", tags=["users"], responses={404: {"description": "Not found"}})
 api_router.include_router(auctions_main.router,  prefix="/auctions", tags=["auctions"], responses={404: {"description": "Not found"}})
-api_router.include_router(auctions_main.router,  prefix="/bids", tags=["bids"], responses={404: {"description": "Not found"}})
+api_router.include_router(bids_main.router,  prefix="/bids", tags=["bids"], responses={404: {"description": "Not found"}})
 
 app = get_application(api_router)
 

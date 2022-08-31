@@ -38,7 +38,7 @@ import Header from "components/Headers/Header.js";
 
 import "../../assets/css/datatables.css";
 
-class AuctionsExplorer extends React.Component {
+class MyBids extends React.Component {
 
     constructor(props) {
         super(props);
@@ -49,7 +49,7 @@ class AuctionsExplorer extends React.Component {
 
     async componentDidMount() {
 
-        await fetch(process.env.REACT_APP_API_LINK + "/api/auctions/all/", {
+        await fetch(process.env.REACT_APP_API_LINK + "/api/bids/allbyuserid/", {
             method: 'get',
             headers: new Headers({
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -61,17 +61,16 @@ class AuctionsExplorer extends React.Component {
                 console.log(data);
 
                 data.forEach(function (element, index) {
-                    this[index].Buttons =
-                        <React.Fragment>
-                            <Button
-                                color="primary"
-                                href={"/admin/auctioninfo/" + this[index].Id}
-                                size="sm"
-                            >
-                                Περισσότερα
-                            </Button>
-                        </React.Fragment>
-
+                    this[index].Time = this[index].Time.split('T')[0] + ' ' + this[index].Time.split('T')[1].split('.')[0]
+                    this[index].Buttons = 
+                    <React.Fragment>
+                        <Button 
+                        color='info'
+                        size='sm'
+                        >
+                            Επικοινωνία Με Πωλητή
+                        </Button>
+                    </React.Fragment>
                 }, data);
 
                 this.setState({
@@ -84,29 +83,36 @@ class AuctionsExplorer extends React.Component {
                                 width: 100
                             },
                             {
-                                label: 'Περιγραφη  ▼',
-                                field: 'Description',
+                                label: 'Τιμη  ▼',
+                                field: 'Amount',
                                 sort: 'asc',
                                 width: 100
                             },
                             {
-                                label: 'Τοποθεσια  ▼',
+                                label: 'Διευθυνση  ▼',
                                 field: 'Location',
                                 sort: 'asc',
                                 width: 100
                             },
                             {
-                                label: 'Τιμη  ▼',
-                                field: 'Currently',
+                                label: 'Χωρα  ▼',
+                                field: 'Country',
                                 sort: 'asc',
                                 width: 100
                             },
                             {
-                                label: 'Ενεργειες▼',
+                                label: 'Ημερομηνια ▼',
+                                field: 'Time',
+                                sort: 'asc',
+                                width: 150
+                            },
+                            {
+                                label: 'Ενεργειες ▼',
                                 field: 'Buttons',
                                 sort: 'asc',
                                 width: 150
-                            }
+                            },
+
                         ],
                         rows: data
                     }
@@ -167,4 +173,4 @@ class AuctionsExplorer extends React.Component {
     };
 }
 
-export default AuctionsExplorer;
+export default MyBids;

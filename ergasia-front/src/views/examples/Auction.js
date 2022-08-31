@@ -22,6 +22,7 @@ import {
     Container,
     Row,
     Col,
+    Input
 } from "reactstrap";
 
 // core components
@@ -39,86 +40,70 @@ import Header from "components/Headers/Header.js";
 import "../../assets/css/datatables.css";
 
 import Maps from './Maps.js'
+import CreateBidModal from '../../views/examples/modals/createBid.js'
 
 class AuctionInfo extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            datas: []
+            datas: [],
+            userRole: 'Client',
+            roles: {},
         };
     };
 
     async componentDidMount() {
+        await fetch(process.env.REACT_APP_API_LINK + '/api/auctions/byid_details/' + this.props.match.params.id + '/', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data.Name)
+                this.setState({
+                    datas: data,
+                })
+            })
 
-        // await fetch(process.env.REACT_APP_API_LINK + "/api/auctions/all/", {
-        //     method: 'get',
-        //     headers: new Headers({
-        //         'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        //         'Content-Type': 'application/x-www-form-urlencoded'
-        //     })
-        // })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         console.log(data);
+        await fetch(process.env.REACT_APP_API_LINK + "/api/users/roles/", {
+            method: 'get',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type': 'application/x-www-form-urlencoded'
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(element => {
+                    console.log(element);
+                    this.state.roles[element.Id] = element.Role
+                });
+            })
 
-        //         data.forEach(function (element, index) {
-        //             this[index].Buttons =
-        //                 <React.Fragment>
-        //                     <Button
-        //                         color="primary"
-        //                         href={"/admin/auctioninfo/" + this[index].Id}
-        //                         size="sm"
-        //                     >
-        //                         Περισσότερα
-        //                     </Button>
-        //                 </React.Fragment>
+        await fetch(process.env.REACT_APP_API_LINK + "/api/users/current/", {
+            method: 'get',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type': 'application/x-www-form-urlencoded'
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                this.setState({
+                    userRole: data.UserRole,
+                })
+                // if (this.state.roles[data.UserRole] == 'Client') {
+                //     document.querySelector(".submit-proposal").remove();
+                // }
 
-        //         }, data);
-
-        //         this.setState({
-        //             datas: {
-        //                 columns: [
-        //                     {
-        //                         label: 'Ονομα ▼',
-        //                         field: 'Name',
-        //                         sort: 'asc',
-        //                         width: 100
-        //                     },
-        //                     {
-        //                         label: 'Περιγραφη  ▼',
-        //                         field: 'Description',
-        //                         sort: 'asc',
-        //                         width: 100
-        //                     },
-        //                     {
-        //                         label: 'Τοποθεσια  ▼',
-        //                         field: 'Location',
-        //                         sort: 'asc',
-        //                         width: 100
-        //                     },
-        //                     {
-        //                         label: 'Τιμη  ▼',
-        //                         field: 'Currently',
-        //                         sort: 'asc',
-        //                         width: 100
-        //                     },
-        //                     {
-        //                         label: 'Ενεργειες▼',
-        //                         field: 'Buttons',
-        //                         sort: 'asc',
-        //                         width: 150
-        //                     }
-        //                 ],
-        //                 rows: data
-        //             }
-        //         })
-        //         // this.setState({
-        //         //     auctions: data
-        //         // })
-        //     })
-        console.log(this.props.match.params.id)
+            })
     }
+
 
     render() {
 
@@ -132,11 +117,11 @@ class AuctionInfo extends React.Component {
 
 
                         <Col className="mb-5 mb-xl-0" xl="12">
-                            <Card className="shadow" style={{ marginTop: '-50px', marginBottom: '30px' }}>
+                            <Card className="shadow" style={{ marginBottom: '30px' }}>
                                 <CardHeader className="border-0">
                                     <Row className="align-items-center">
                                         <div className="col">
-                                            <h3 className="mb-0">Πληροφορίες Δημοπρασίας / Υποβολή Προσφοράς</h3>
+                                            <h3 className="mb-0">Πληροφορίες Δημοπρασίας</h3>
                                         </div>
                                     </Row>
                                 </CardHeader>
@@ -146,7 +131,27 @@ class AuctionInfo extends React.Component {
 
                         <Col sm='12' className='align-items-center'>
                             <Card style={{ padding: '30px' }}>
-                                <Maps />
+                                <div style={{ marginTop: '100px' }}>
+
+                                    <Maps />
+                                </div>
+                                <Row className='mt-4'>
+
+                                    {Object.keys(this.state.datas).map((key, index) => {
+                                        return (
+                                            <Col sm="4">
+
+                                                <span>{key}</span>
+                                                <Input type="text" value={this.state.datas[key]} disabled /> <br />
+                                            </Col>
+                                            // <div key={index}>
+                                            //     <h2>{value}</h2>
+
+                                            //     <hr />
+                                            // </div>
+                                        );
+                                    })}
+                                </Row>
                                 {/* <MDBDataTable
                                     striped
                                     bordered
@@ -161,6 +166,43 @@ class AuctionInfo extends React.Component {
 
                     </Row>
                 </Container>
+                {this.state.roles[this.state.userRole] == 'Bidder' ?
+                    <>
+                        <Container className="mt-12 submit-proposal" fluid>
+                            <Row className="mt-5 align-items-center">
+
+
+
+                                <Col className="mb-5 mb-xl-0" xl="12">
+                                    <Card className="shadow" style={{ marginBottom: '30px' }}>
+                                        <CardHeader className="border-0">
+                                            <Row className="align-items-center">
+                                                <div className="col">
+                                                    <h3 className="mb-0">Υποβολή Προσφοράς</h3>
+                                                </div>
+                                            </Row>
+                                        </CardHeader>
+                                    </Card>
+                                </Col>
+
+
+                                <Col sm='12' className='align-items-center'>
+                                    <Card style={{ padding: '30px' }}>
+                                        <p>Η διαδικασία υποβολής προσφοράς είναι μη αναιρέσιμη</p>
+                                        <Col sm='6'>
+                                            <CreateBidModal auctionId={this.props.match.params.id} />
+                                        </Col>
+                                    </Card>
+                                </Col>
+
+                            </Row>
+                        </Container>
+                    </>
+                    :
+                    <>
+                    </>
+                }
+
             </>
 
 

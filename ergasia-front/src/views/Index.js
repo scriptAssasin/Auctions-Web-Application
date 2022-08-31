@@ -173,28 +173,72 @@ class Index extends React.Component {
                         </CardBody>
                       </Card>
                     </Col>
-                    <Col lg="3">
-                      <Card style={{ width: "18rem" }}>
-                        {/* <CardImg
+                    {this.state.roles[this.state.userRole] != 'Client' ?
+                      <>
+                        {this.state.roles[this.state.userRole] == 'Seller' ?
+                          <>
+                            <Col lg="3">
+                              <Card style={{ width: "18rem" }}>
+                                {/* <CardImg
             alt="..."
             src={require("assets/img/theme/img-1-1000x900.jpg").default}
             top
           /> */}
-                        <CardBody>
-                          <CardTitle>Διαχείριση Δημοπρασιών</CardTitle>
-                          <CardText>
-                            Μεταβαίνοντας στην σελίδα αυτή, σας δίνεται η δυνατότητα να διαχειριστείτε τις δημοπρασίες σας.
-                          </CardText>
-                          <Button
-                            color="primary"
-                            href="/admin/auctionsmanagement"
+                                <CardBody>
+                                  <CardTitle>Διαχείριση Δημοπρασιών</CardTitle>
+                                  <CardText>
+                                    Μεταβαίνοντας στην σελίδα αυτή, σας δίνεται η δυνατότητα να διαχειριστείτε τις δημοπρασίες σας.
+                                  </CardText>
+                                  <Button
+                                    color="primary"
+                                    href="/admin/auctionsmanagement"
 
-                          >
-                            Μετάβαση
-                          </Button>
-                        </CardBody>
-                      </Card>
-                    </Col>
+                                  >
+                                    Μετάβαση
+                                  </Button>
+                                </CardBody>
+                              </Card>
+                            </Col>
+                          </>
+                          :
+                          <>
+                          </>
+                        }
+                        {this.state.roles[this.state.userRole] == 'Bidder' ?
+                          <>
+                            <Col lg="3">
+                              <Card style={{ width: "18rem" }}>
+                                {/* <CardImg
+            alt="..."
+            src={require("assets/img/theme/img-1-1000x900.jpg").default}
+            top
+          /> */}
+                                <CardBody>
+                                  <CardTitle>Οι Προσφορές Μου</CardTitle>
+                                  <CardText>
+                                    Μεταβαίνοντας στην σελίδα αυτή, σας δίνεται η δυνατότητα να δείτε τις προσφορές που έχετε υποβάλλει.
+                                  </CardText>
+                                  <Button
+                                    color="primary"
+                                    href="/admin/mybids"
+
+                                  >
+                                    Μετάβαση
+                                  </Button>
+                                </CardBody>
+                              </Card>
+                            </Col>
+                          </>
+                          :
+                          <>
+                          </>
+                        }
+                      </>
+                      :
+                      <>
+                      </>
+                    }
+
                   </>
                 }
 

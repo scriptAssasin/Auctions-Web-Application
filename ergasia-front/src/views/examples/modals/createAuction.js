@@ -39,6 +39,7 @@ class CreateAuctionModal extends React.Component {
 
     handleChange = evt => {
         let value = evt.target.value;
+        console.log(value)
 
         if (evt.target.name == 'itemCategories') {
             value = evt.target.value.split(",")
@@ -122,7 +123,7 @@ class CreateAuctionModal extends React.Component {
                                                 </Col>
                                                 <Col sm='6'>
                                                     <label>Ημερομηνία Λήξης Δημοπρασίας</label>
-                                                    <Input name='auctionEndDate' type='text' placeholder='Εισάγετε Ημερομηνία Λήξης Δημοπρασίας' onChange={(e) => { this.handleChange(e) }} /> <br />
+                                                    <Input name='auctionEndDate' type='date' placeholder='Εισάγετε Ημερομηνία Λήξης Δημοπρασίας' onChange={(e) => { this.handleChange(e) }} /> <br />
 
                                                 </Col>
                                                 <Col sm='12'>

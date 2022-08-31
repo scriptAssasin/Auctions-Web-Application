@@ -11,6 +11,8 @@ import UserDetails from "views/examples/UserDetails.js";
 import AuctionsManagement from "views/examples/AuctionsManagement.js";
 import AuctionsExplorer from "views/examples/Auctions.js";
 import AuctionInfo from "views/examples/Auction.js";
+import MyBids from "views/examples/MyBids.js";
+import AuctionBids from "views/examples/AuctionBids.js";
 
 var routes = [
   {
@@ -53,6 +55,20 @@ var routes = [
     name: "Auction Info",
     icon: "ni ni-pin-3 text-orange",
     component: AuctionInfo,
+    layout: "/admin",
+  },
+  {
+    path: "/mybids",
+    name: "My Bids",
+    icon: "ni ni-pin-3 text-orange",
+    component: MyBids,
+    layout: "/admin",
+  },
+  {
+    path: "/auctionbids/:id",
+    name: "Auction Bids",
+    icon: "ni ni-pin-3 text-orange",
+    component: AuctionBids,
     layout: "/admin",
   },
   // {

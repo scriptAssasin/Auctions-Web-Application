@@ -96,6 +96,21 @@ class AuctionsManagement extends React.Component {
       })
   }
 
+  endAuction = (auctionId) => {
+
+    fetch(process.env.REACT_APP_API_LINK + '/api/auctions/end/' + auctionId + '/', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        window.location.reload();
+      })
+  }
+
   render() {
     return (
       <>
@@ -146,21 +161,13 @@ class AuctionsManagement extends React.Component {
                           <Row>
 
 
-                            <Col sm='5'>
-                              <Button
-                                color="info"
-                                size='sm'
 
-                              >
-                                Προσφορές
-                              </Button>
-                            </Col>
                             {!auction.hasStarted ? <>
                               <Col sm='5'>
 
                                 <EditAuctionModal auctionId={auction.Id} />
                               </Col>
-                              <Col sm='5'  className='mt-3'>
+                              <Col sm='5'>
 
                                 <Button
                                   color="danger"
@@ -179,7 +186,34 @@ class AuctionsManagement extends React.Component {
                                   Εκκίνηση
                                 </Button>
                               </Col>
-                            </> : <></>}
+                            </>
+                              :
+                              <>
+                                <Col sm='5'>
+                                  <Button
+                                    color="info"
+                                    size='sm'
+                                    href={'/admin/auctionbids/' + auction.Id}
+                                  >
+                                    Προσφορές
+                                  </Button>
+                                </Col>
+                              </>}
+                            {!auction.hasEnded && auction.hasStarted ? <>
+                              <Col sm='5'>
+                                <Button
+                                  color="success"
+                                  size='sm'
+                                  onClick={() => { this.endAuction(auction.Id) }}
+                                >
+                                  Ολοκλήρωση
+                                </Button>
+                              </Col>
+                            </>
+                              :
+                              <>
+                              </>
+                            }
                           </Row>
                         </CardBody>
                       </Card>

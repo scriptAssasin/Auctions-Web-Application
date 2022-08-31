@@ -16,6 +16,7 @@ class UserRegister(BaseModel):
     Email: str
     Address: str
     Phone: str
+    Role: Optional[str]
 
 class AuctionsCRUD(BaseModel):
     itemName: str
@@ -26,7 +27,9 @@ class AuctionsCRUD(BaseModel):
     auctionEndDate: str
 
 class BidsCRUD(BaseModel):
-    Amount:str
+    itemPrice:str
+    itemLocation: str
+    itemCountry: str
 
 Users = Base.classes.Users
 Roles = Base.classes.UserRoles

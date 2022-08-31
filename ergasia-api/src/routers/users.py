@@ -62,6 +62,14 @@ async def get_user_roles(current_user: User = Depends(get_current_active_user), 
 async def register_user(UserData: UserRegister, db: Session = Depends(get_db)):
     print(UserData)
 
+    roles = db.query(Roles).values(Roles.Id, Roles.Role)
+
+    roles = [x._asdict() for x in roles]
+    role_dict = {}
+    
+    for role in roles:
+        role_dict[role['Role']] = role['Id']
+
     existing = db.query(Users).filter(Users.Username == UserData.Username).first()
 
     if not existing:
@@ -78,7 +86,7 @@ async def register_user(UserData: UserRegister, db: Session = Depends(get_db)):
             Address=UserData.Address,
             Afm=UserData.Afm,
             Email=UserData.Email,
-            UserRole='aafc2a5f-675a-42e7-8a8d-ef762cf3f53e'
+            UserRole=role_dict[UserData.Role] if UserData.Role else role_dict['Client']
         )
         db.add(new_user)
         db.commit()
@@ -86,6 +94,15 @@ async def register_user(UserData: UserRegister, db: Session = Depends(get_db)):
         return {}
     else:
         return -1
+
+@router.post("/register2/")
+async def register_user(db: Session = Depends(get_db)):
+
+
+    
+
+    return {}
+
 
 @router.post("/approve/{user_id}/")
 async def approve_user(user_id: str, db: Session = Depends(get_db)):

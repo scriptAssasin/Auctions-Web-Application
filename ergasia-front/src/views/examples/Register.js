@@ -31,13 +31,13 @@ async function loginUser(credentials) {
   })
     .then(data => {
       data.json()
-      .then(res => {
-        if(res.access_token){
-          setToken(String(res.access_token));          
-          
-          window.location.replace("/admin/index");
-        }
-      })
+        .then(res => {
+          if (res.access_token) {
+            setToken(String(res.access_token));
+
+            window.location.replace("/admin/index");
+          }
+        })
     })
 }
 
@@ -54,6 +54,7 @@ const Register = () => {
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
+    console.log(name, value)
     setInputs(values => ({ ...values, [name]: value }))
   }
 
@@ -61,7 +62,7 @@ const Register = () => {
     event.preventDefault();
     let Username = inputs['Username'];
     let password = inputs['Password'];
-    
+
     if (Object.keys(inputs).length < 8) {
       alert('Παρακαλούμε συμπληρώστε όλα τα πεδία');
     }
@@ -81,7 +82,7 @@ const Register = () => {
           .then(response => response.json())
           .then(data => {
             console.log(data);
-            if(data == -1)
+            if (data == -1)
               alert('Το username που συμπληρώσατε είναι ήδη χρησιμοποιημένο!');
             else {
 
@@ -200,6 +201,27 @@ const Register = () => {
                     name="Afm"
                     onChange={handleChange}
                   />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                <InputGroup className="input-group-alternative mb-3">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="fa fa-address-card" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    type={"select"}
+                    size="2"
+                    name="Role"
+                    // value={selectedOption}
+                    onChange={handleChange}
+                  >
+                    <option value="" hidden></option>
+                    <option value={"Client"} selected>Επισκέπτης</option>
+                    <option value={"Seller"}>Πωλητής</option>
+                    <option value={"Bidder"}>Προσφοροδότης</option>
+                  </Input>
                 </InputGroup>
               </FormGroup>
               <FormGroup>

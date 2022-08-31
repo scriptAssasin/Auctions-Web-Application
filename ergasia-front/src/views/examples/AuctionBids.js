@@ -38,7 +38,7 @@ import Header from "components/Headers/Header.js";
 
 import "../../assets/css/datatables.css";
 
-class AuctionsExplorer extends React.Component {
+class AuctionBids extends React.Component {
 
     constructor(props) {
         super(props);
@@ -49,7 +49,7 @@ class AuctionsExplorer extends React.Component {
 
     async componentDidMount() {
 
-        await fetch(process.env.REACT_APP_API_LINK + "/api/auctions/all/", {
+        await fetch(process.env.REACT_APP_API_LINK + "/api/bids/allbyauctionid/" + this.props.match.params.id + '/', {
             method: 'get',
             headers: new Headers({
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -61,52 +61,60 @@ class AuctionsExplorer extends React.Component {
                 console.log(data);
 
                 data.forEach(function (element, index) {
-                    this[index].Buttons =
-                        <React.Fragment>
-                            <Button
-                                color="primary"
-                                href={"/admin/auctioninfo/" + this[index].Id}
-                                size="sm"
-                            >
-                                Περισσότερα
-                            </Button>
-                        </React.Fragment>
-
+                    this[index].Time = this[index].Time.split('T')[0] + ' ' + this[index].Time.split('T')[1].split('.')[0]
                 }, data);
-
                 this.setState({
                     datas: {
                         columns: [
                             {
-                                label: 'Ονομα ▼',
+                                label: 'Ονομα Προιοντος ▼',
                                 field: 'Name',
                                 sort: 'asc',
                                 width: 100
                             },
                             {
-                                label: 'Περιγραφη  ▼',
-                                field: 'Description',
+                                label: 'Ονομα Υποβαλοντος ▼',
+                                field: 'User_Name',
                                 sort: 'asc',
                                 width: 100
                             },
                             {
-                                label: 'Τοποθεσια  ▼',
-                                field: 'Location',
+                                label: 'Επωνυμο Υποβαλοντος ▼',
+                                field: 'Surname',
+                                sort: 'asc',
+                                width: 100
+                            },
+                            {
+                                label: 'Τηλεφωνο Υποβαλοντος ▼',
+                                field: 'Phone',
                                 sort: 'asc',
                                 width: 100
                             },
                             {
                                 label: 'Τιμη  ▼',
-                                field: 'Currently',
+                                field: 'Amount',
                                 sort: 'asc',
                                 width: 100
                             },
                             {
-                                label: 'Ενεργειες▼',
-                                field: 'Buttons',
+                                label: 'Διευθυνση  ▼',
+                                field: 'Location',
+                                sort: 'asc',
+                                width: 100
+                            },
+                            {
+                                label: 'Χωρα  ▼',
+                                field: 'Country',
+                                sort: 'asc',
+                                width: 100
+                            },
+                            {
+                                label: 'Ημερομηνια ▼',
+                                field: 'Time',
                                 sort: 'asc',
                                 width: 150
                             }
+
                         ],
                         rows: data
                     }
@@ -134,7 +142,7 @@ class AuctionsExplorer extends React.Component {
                                 <CardHeader className="border-0">
                                     <Row className="align-items-center">
                                         <div className="col">
-                                            <h3 className="mb-0">Πλοήγηση / Αναζήτηση Δημοπρασιών</h3>
+                                            <h3 className="mb-0">Υποβληθείσες Προσφορές</h3>
                                         </div>
                                     </Row>
                                 </CardHeader>
@@ -167,4 +175,4 @@ class AuctionsExplorer extends React.Component {
     };
 }
 
-export default AuctionsExplorer;
+export default AuctionBids;

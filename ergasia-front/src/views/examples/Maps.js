@@ -88,7 +88,7 @@ const MapWrapper = () => {
   return (
     <>
       <div
-        style={{ height: `600px` }}
+        style={{ height: `300px` }}
         className="map-canvas"
         id="map-canvas"
         ref={mapRef}
@@ -100,7 +100,7 @@ const MapWrapper = () => {
 const Maps = () => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>

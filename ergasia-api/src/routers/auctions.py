@@ -15,7 +15,7 @@ router = APIRouter()
 
 @router.get("/all/")
 async def get_all_auctions(current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
-    return db.query(Auctions).all()
+    return db.query(Auctions).filter(Auctions.hasStarted == True, Auctions.hasEnded == False, Auctions.UserId != current_user.Id).all()
 
 @router.get("/allspecificuser/")
 async def get_all_auctions(current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
@@ -24,6 +24,17 @@ async def get_all_auctions(current_user: User = Depends(get_current_active_user)
 @router.get("/byid/{auction_id}/")
 async def get_auction_by_id(auction_id: str,current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
     return db.query(Auctions).filter(Auctions.Id == auction_id).first()
+
+@router.get("/byid_details/{auction_id}/")
+async def get_auction_by_id_details(auction_id: str,current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    temp = (
+        db.query(Auctions)
+        .filter(Auctions.Id == auction_id)
+        .values(Auctions.Name.label('Όνομα'), Auctions.Currently.label('Υψηλότερη Τιμή'), Auctions.Categories.label('Κατηγορίες'), Auctions.Location.label('Διεύθυνση'), Auctions.Description.label('Περιγραφή') )
+    )
+    temp = [x._asdict() for x in temp]
+
+    return temp[0]
 
 @router.post("/create/")
 async def create_auction(body: AuctionsCRUD, current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
@@ -37,9 +48,11 @@ async def create_auction(body: AuctionsCRUD, current_user: User = Depends(get_cu
         BuyPrice=body.buyPrice,
         FirstBid=body.firstBid,
         Description=body.itemDescription,
-        Ends=datetime.strptime(body.auctionEndDate, '%d/%m/%y') if body.auctionEndDate != '' else None,
+        # Ends=datetime.strptime(body.auctionEndDate, '%Y/%m/%d') if body.auctionEndDate != '' else None,
+        Ends=None,
         UserId=current_user.Id,
-        hasStarted=False
+        hasStarted=False,
+        hasEnded=False
     )
     db.add(new_auction)
     db.commit()
@@ -51,6 +64,16 @@ async def start_auction(auction_id: str, current_user: User = Depends(get_curren
 
     if auction:
         auction.hasStarted = True
+        db.commit()
+        
+    return {}
+
+@router.post("/end/{auction_id}/")
+async def end_auction(auction_id: str, current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    auction = db.query(Auctions).filter(Auctions.Id == auction_id).first()
+
+    if auction:
+        auction.hasEnded = True
         db.commit()
         
     return {}
