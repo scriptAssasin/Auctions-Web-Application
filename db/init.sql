@@ -38,7 +38,8 @@ CREATE TABLE public."Auctions" (
     "Seller" text,
     "Description" text,
     "UserId" text NOT NULL,
-    "hasStarted" boolean NOT NULL
+    "hasStarted" boolean NOT NULL,
+    "hasEnded" boolean
 );
 
 
@@ -98,6 +99,10 @@ ALTER TABLE public."Users" OWNER TO postgres;
 -- Data for Name: Auctions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+COPY public."Auctions" ("Id", "ItemId", "Name", "Categories", "Currently", "BuyPrice", "FirstBid", "Location", "Started", "Ends", "Seller", "Description", "UserId", "hasStarted", "hasEnded") FROM stdin;
+\.
+
+
 --
 -- Data for Name: Bids; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -124,7 +129,6 @@ f7703f41-958e-491b-a005-8372112d17e0	Bidder
 
 COPY public."Users" ("Id", "Username", "Password", "Pending", "Name", "Surname", "Phone", "Address", "Afm", "Email", "UserRole") FROM stdin;
 9d7f1d65-6354-4cf5-9e9b-aa5f5ca83503	admin	ODFkYzliZGI1MmQwNGRjMjAwMzZkYmQ4MzEzZWQwNTU=	f	admin	admin	35435	sdfsd	435435	aggelos@aggelos.gr	61717681-4ed0-47bd-8d67-3833c85f8e2e
-df1acd40-3854-417a-80d8-f286ae425fb6	aggelos	ODFkYzliZGI1MmQwNGRjMjAwMzZkYmQ4MzEzZWQwNTU=	f	aggelos	fakorellis	56546564	test 	43534535	aggelosfk1@gmail.com	aafc2a5f-675a-42e7-8a8d-ef762cf3f53e
 \.
 
 

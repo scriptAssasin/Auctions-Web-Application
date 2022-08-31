@@ -36,6 +36,25 @@ async def get_auction_by_id_details(auction_id: str,current_user: User = Depends
 
     return temp[0]
 
+@router.get("/export/")
+async def export_all_auctions(current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    
+    from xml.dom import minidom
+    import os 
+    root = minidom.Document()
+  
+    xml = root.createElement('root') 
+    root.appendChild(xml)
+    
+    productChild = root.createElement('Item')
+    productChild.setAttribute('ItemId', '45345')
+    
+    xml.appendChild(productChild)
+    
+    xml_str = root.toprettyxml(indent ="\t") 
+    
+    return xml_str
+
 @router.post("/create/")
 async def create_auction(body: AuctionsCRUD, current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
     new_uuid = str(uuid.uuid4())

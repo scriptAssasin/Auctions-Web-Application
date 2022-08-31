@@ -25,6 +25,7 @@ class AuctionsCRUD(BaseModel):
     firstBid: str
     itemDescription: str
     auctionEndDate: str
+    location: Optional[str]
 
 class BidsCRUD(BaseModel):
     itemPrice:str

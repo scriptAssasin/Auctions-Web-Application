@@ -95,15 +95,6 @@ async def register_user(UserData: UserRegister, db: Session = Depends(get_db)):
     else:
         return -1
 
-@router.post("/register2/")
-async def register_user(db: Session = Depends(get_db)):
-
-
-    
-
-    return {}
-
-
 @router.post("/approve/{user_id}/")
 async def approve_user(user_id: str, db: Session = Depends(get_db)):
 
