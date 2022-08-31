@@ -91,10 +91,10 @@ class Index extends React.Component {
   }
 
   render() {
-    
+
     return (
       <>
-        {this.state.loading && this.state.userRole != 'Administrator'  ?
+        {this.state.loading && this.state.userRole != 'Administrator' ?
           <>
             <Header />
             {/* Page content */}
@@ -144,8 +144,7 @@ class Index extends React.Component {
                           </CardText>
                           <Button
                             color="primary"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
+                            href="/admin/auctionsexplorer"
                           >
                             Μετάβαση
                           </Button>
@@ -189,7 +188,7 @@ class Index extends React.Component {
                           <Button
                             color="primary"
                             href="/admin/auctionsmanagement"
-                            
+
                           >
                             Μετάβαση
                           </Button>

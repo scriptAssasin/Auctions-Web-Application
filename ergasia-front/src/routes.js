@@ -9,6 +9,8 @@ import Icons from "views/examples/Icons.js";
 import UserManagement from "views/examples/UserManagement.js";
 import UserDetails from "views/examples/UserDetails.js";
 import AuctionsManagement from "views/examples/AuctionsManagement.js";
+import AuctionsExplorer from "views/examples/Auctions.js";
+import AuctionInfo from "views/examples/Auction.js";
 
 var routes = [
   {
@@ -37,6 +39,20 @@ var routes = [
     name: "Auctions Management",
     icon: "ni ni-pin-3 text-orange",
     component: AuctionsManagement,
+    layout: "/admin",
+  },
+  {
+    path: "/auctionsexplorer",
+    name: "Auctions Explorer",
+    icon: "ni ni-pin-3 text-orange",
+    component: AuctionsExplorer,
+    layout: "/admin",
+  },
+  {
+    path: "/auctioninfo/:id",
+    name: "Auction Info",
+    icon: "ni ni-pin-3 text-orange",
+    component: AuctionInfo,
     layout: "/admin",
   },
   // {

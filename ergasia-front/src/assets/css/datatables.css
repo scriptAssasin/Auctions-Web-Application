@@ -1,0 +1,31 @@
+li.page-item:last-child .page-link
+{
+    border-radius:0px!important;
+    width:100px!important;
+}
+li.page-item:first-child .page-link
+{
+    border-radius:0px!important;
+    width:100px!important;
+}
+div[data-test="datatable-info"]
+{
+    padding-top:15px;
+}
+div[data-test="datatable-pagination"]
+{
+    padding-top:15px;
+}
+/* div[data-test="datatable-select"] label
+{ */
+    /* text-align:center; */
+    /* padding-bottom:0px; */
+/* } */
+
+div[data-test="datatable-select"] label select
+{
+    width:70px;
+    margin-top:5px;
+}
+
+/* th:empty, td:empty { display:none; } */

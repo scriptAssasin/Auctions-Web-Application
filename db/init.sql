@@ -21,6 +21,47 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: Auctions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Auctions" (
+    "Id" text NOT NULL,
+    "ItemId" text NOT NULL,
+    "Name" text NOT NULL,
+    "Categories" text[],
+    "Currently" text,
+    "BuyPrice" text,
+    "FirstBid" text,
+    "Location" text,
+    "Started" date,
+    "Ends" date,
+    "Seller" text,
+    "Description" text,
+    "UserId" text NOT NULL,
+    "hasStarted" boolean NOT NULL
+);
+
+
+ALTER TABLE public."Auctions" OWNER TO postgres;
+
+--
+-- Name: Bids; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Bids" (
+    "Id" text NOT NULL,
+    "AuctionId" text NOT NULL,
+    "Amount" text NOT NULL,
+    "Location" text NOT NULL,
+    "Country" text NOT NULL,
+    "Time" timestamp without time zone NOT NULL,
+    "UserId" text NOT NULL
+);
+
+
+ALTER TABLE public."Bids" OWNER TO postgres;
+
+--
 -- Name: UserRoles; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -54,6 +95,18 @@ CREATE TABLE public."Users" (
 ALTER TABLE public."Users" OWNER TO postgres;
 
 --
+-- Data for Name: Auctions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+--
+-- Data for Name: Bids; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Bids" ("Id", "AuctionId", "Amount", "Location", "Country", "Time", "UserId") FROM stdin;
+\.
+
+
+--
 -- Data for Name: UserRoles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -71,7 +124,24 @@ f7703f41-958e-491b-a005-8372112d17e0	Bidder
 
 COPY public."Users" ("Id", "Username", "Password", "Pending", "Name", "Surname", "Phone", "Address", "Afm", "Email", "UserRole") FROM stdin;
 9d7f1d65-6354-4cf5-9e9b-aa5f5ca83503	admin	ODFkYzliZGI1MmQwNGRjMjAwMzZkYmQ4MzEzZWQwNTU=	f	admin	admin	35435	sdfsd	435435	aggelos@aggelos.gr	61717681-4ed0-47bd-8d67-3833c85f8e2e
+df1acd40-3854-417a-80d8-f286ae425fb6	aggelos	ODFkYzliZGI1MmQwNGRjMjAwMzZkYmQ4MzEzZWQwNTU=	f	aggelos	fakorellis	56546564	test 	43534535	aggelosfk1@gmail.com	aafc2a5f-675a-42e7-8a8d-ef762cf3f53e
 \.
+
+
+--
+-- Name: Auctions Auctions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Auctions"
+    ADD CONSTRAINT "Auctions_pkey" PRIMARY KEY ("Id");
+
+
+--
+-- Name: Bids Bids_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Bids"
+    ADD CONSTRAINT "Bids_pkey" PRIMARY KEY ("Id");
 
 
 --
