@@ -17,7 +17,7 @@ services:
       dockerfile: Dockerfile
     container_name: frontend_tedi
     ports: 
-    - 3000:3000
+    - 443:3000
     volumes: 
       - ./ergasia-front/src:/app/src
       - ./ergasia-front/public/assets:/app/public/assets
